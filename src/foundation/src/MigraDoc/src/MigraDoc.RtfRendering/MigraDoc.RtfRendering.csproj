@@ -5,7 +5,7 @@
     <RootNamespace>MigraDoc</RootNamespace>
     <AssemblyOriginatorKeyFile>..\..\..\..\..\StrongnameKey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>True</SignAssembly>
-    <LangVersion>12</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -6,7 +6,7 @@
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
         <UseWindowsForms>true</UseWindowsForms>
         <IsPackable>false</IsPackable>
-        <LangVersion>12</LangVersion>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

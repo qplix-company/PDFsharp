@@ -6,7 +6,7 @@
     <RootNamespace>PDFsharp.Features</RootNamespace>
     <UseWPF>true</UseWPF>
     <DefineConstants>WPF</DefineConstants>
-    <LangVersion>12</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

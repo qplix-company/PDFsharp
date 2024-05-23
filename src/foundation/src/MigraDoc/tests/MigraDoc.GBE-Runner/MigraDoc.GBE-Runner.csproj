@@ -5,7 +5,7 @@
     <TargetFrameworks>net6.0;net472</TargetFrameworks>
     <RootNamespace>MigraDoc.GBE_Runner</RootNamespace>
     <StartupObject>MigraDoc.GBE_Runner.Program</StartupObject>
-    <LangVersion>12</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
