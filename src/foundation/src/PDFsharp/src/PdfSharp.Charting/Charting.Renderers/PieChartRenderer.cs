@@ -102,6 +102,7 @@ namespace PdfSharp.Charting.Renderers
             {
                 ChartType.Pie2D => new PieClosedPlotAreaRenderer(_rendererParms),
                 ChartType.PieExploded2D => new PieExplodedPlotAreaRenderer(_rendererParms),
+                ChartType.Donut => new DonutPlotAreaRenderer(_rendererParms),
                 _ => null! ?? NRT.ThrowOnNull<PlotAreaRenderer>()
             };
         }

@@ -10,12 +10,17 @@ namespace PdfSharp.Charting.Renderers
     /// </summary>
     abstract class PiePlotAreaRenderer : PlotAreaRenderer
     {
+        private readonly bool isDonut;
+        private const int DonutWidthPercentage = 20;
+
         /// <summary>
         /// Initializes a new instance of the PiePlotAreaRenderer class
         /// with the specified renderer parameters.
         /// </summary>
-        internal PiePlotAreaRenderer(RendererParameters parms) : base(parms)
-        { }
+        internal PiePlotAreaRenderer(RendererParameters parms, bool isDonut = false) : base(parms)
+        {
+          this.isDonut = isDonut;
+        }
 
         /// <summary>
         /// Layouts and calculates the space used by the pie plot area.
@@ -36,6 +41,15 @@ namespace PdfSharp.Charting.Renderers
             if (cri.SeriesRendererInfos.Length == 0)
                 return;
 
+            XRect innerPlotAreaRect = cri.plotAreaRendererInfo.Rect;
+            double w = Math.Min(innerPlotAreaRect.Width, innerPlotAreaRect.Height) * DonutWidthPercentage/100d;
+            innerPlotAreaRect.X += w / 2;
+            innerPlotAreaRect.Y += w / 2;
+            innerPlotAreaRect.Width -= w;
+            innerPlotAreaRect.Height -= w;
+
+            XBrush backgroundBrush = new XSolidBrush(XColors.White); //cri.plotAreaRendererInfo.plotArea.FillFormat.Color
+
             var gfx = _rendererParms.Graphics;
             var state = gfx.Save();
 
@@ -48,10 +62,18 @@ namespace PdfSharp.Charting.Renderers
             }
 
             // Draw border of the sectors.
-            foreach (SectorRendererInfo sector in sri.PointRendererInfos)
+            if (isDonut)
             {
-                if (!Double.IsNaN(sector.StartAngle) && !Double.IsNaN(sector.SweepAngle))
-                    gfx.DrawPie(sector.LineFormat, sector.Rect, sector.StartAngle, sector.SweepAngle);
+                XBrush backgroundBrush = new XSolidBrush(cri.plotAreaRendererInfo.plotArea.FillFormat.Color);
+                gfx.DrawPie(backgroundBrush, innerPlotAreaRect, 0, 360);
+            }
+            else
+            {
+                foreach (SectorRendererInfo sector in sri.PointRendererInfos)
+                {
+                    if (!Double.IsNaN(sector.StartAngle) && !Double.IsNaN(sector.SweepAngle))
+                        gfx.DrawPie(sector.LineFormat, sector.Rect, sector.StartAngle, sector.SweepAngle);
+                }
             }
 
             gfx.Restore(state);

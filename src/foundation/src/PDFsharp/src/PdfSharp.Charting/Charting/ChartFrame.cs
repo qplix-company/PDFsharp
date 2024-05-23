@@ -184,6 +184,7 @@ namespace PdfSharp.Charting
                 ChartType.Area2D => new AreaChartRenderer(parms),
                 ChartType.Pie2D => new PieChartRenderer(parms),
                 ChartType.PieExploded2D => new PieChartRenderer(parms),
+                ChartType.Donut => new PieChartRenderer(parms),
                 _ => null
             };
         }

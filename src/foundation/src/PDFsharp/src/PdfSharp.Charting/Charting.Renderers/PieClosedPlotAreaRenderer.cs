@@ -16,6 +16,10 @@ namespace PdfSharp.Charting.Renderers
         /// </summary>
         internal PieClosedPlotAreaRenderer(RendererParameters parms) : base(parms)
         { }
+    
+        protected PieClosedPlotAreaRenderer(RendererParameters parms, bool isDonut) 
+          : base(parms, isDonut) 
+        { }
 
         /// <summary>
         /// Calculate angles for each sector.

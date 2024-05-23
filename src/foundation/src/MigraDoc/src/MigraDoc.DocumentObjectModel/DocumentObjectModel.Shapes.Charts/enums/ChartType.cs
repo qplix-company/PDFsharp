@@ -47,5 +47,10 @@ namespace MigraDoc.DocumentObjectModel.Shapes.Charts
         /// An exploded 2d pie chart.
         /// </summary>
         PieExploded2D,
+    
+        /// <summary>
+        /// A donut chart.
+        /// </summary>
+        Donut,
     }
 }
