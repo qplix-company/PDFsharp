@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>net6.0-windows;net472-windows</TargetFrameworks>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -7,6 +7,7 @@
     <RootNamespace>PDFsharp.Features</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
     <DefineConstants>GDI</DefineConstants>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

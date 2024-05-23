@@ -10,7 +10,7 @@ namespace PdfSharp.Charting.Renderers
     /// </summary>
     abstract class PiePlotAreaRenderer : PlotAreaRenderer
     {
-        private readonly bool isDonut;
+        private readonly bool _isDonut;
         private const int DonutWidthPercentage = 20;
 
         /// <summary>
@@ -19,13 +19,13 @@ namespace PdfSharp.Charting.Renderers
         /// </summary>
         internal PiePlotAreaRenderer(RendererParameters parms, bool isDonut = false) : base(parms)
         {
-          this.isDonut = isDonut;
+            _isDonut = isDonut;
         }
 
         /// <summary>
         /// Layouts and calculates the space used by the pie plot area.
         /// </summary>
-        internal override void Format() 
+        internal override void Format()
             => CalcSectors();
 
         /// <summary>
@@ -41,14 +41,12 @@ namespace PdfSharp.Charting.Renderers
             if (cri.SeriesRendererInfos.Length == 0)
                 return;
 
-            XRect innerPlotAreaRect = cri.plotAreaRendererInfo.Rect;
-            double w = Math.Min(innerPlotAreaRect.Width, innerPlotAreaRect.Height) * DonutWidthPercentage/100d;
+            XRect innerPlotAreaRect = cri.PlotAreaRendererInfo.Rect;
+            double w = Math.Min(innerPlotAreaRect.Width, innerPlotAreaRect.Height) * DonutWidthPercentage / 100d;
             innerPlotAreaRect.X += w / 2;
             innerPlotAreaRect.Y += w / 2;
             innerPlotAreaRect.Width -= w;
             innerPlotAreaRect.Height -= w;
-
-            XBrush backgroundBrush = new XSolidBrush(XColors.White); //cri.plotAreaRendererInfo.plotArea.FillFormat.Color
 
             var gfx = _rendererParms.Graphics;
             var state = gfx.Save();
@@ -62,9 +60,9 @@ namespace PdfSharp.Charting.Renderers
             }
 
             // Draw border of the sectors.
-            if (isDonut)
+            if (_isDonut)
             {
-                XBrush backgroundBrush = new XSolidBrush(cri.plotAreaRendererInfo.plotArea.FillFormat.Color);
+                XBrush backgroundBrush = new XSolidBrush(cri.PlotAreaRendererInfo.PlotArea.FillFormat.Color);
                 gfx.DrawPie(backgroundBrush, innerPlotAreaRect, 0, 360);
             }
             else
