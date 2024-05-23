@@ -34,6 +34,10 @@ namespace PdfSharp.Charting.Renderers
                 if (DoubleUtil.IsZero(size))
                     size = defaultFont.Size;
 
+                // TODO fc
+                // QPLIX has a default here... :
+                // xFont = new XFont(fontFamily, size, fontStyle, defaultFont.PdfOptions);
+                
                 xFont = new XFont(fontFamily, size, fontStyle);
             }
             return xFont;

@@ -10,6 +10,11 @@ namespace PdfSharp.Charting.Renderers
     /// </summary>
     sealed class ColumnColors
     {
+        // TODO fc
+        // QPLIX has a different color?!? :
+        // if (seriesColors.Length <= index)
+        //     return XColor.FromArgb((int)seriesColors[0]); // MODIFIED BY QPLIX: Q-12199 fallback to default color
+        
         /// <summary>
         /// Gets the color for column/bar charts from the specified index.
         /// </summary>

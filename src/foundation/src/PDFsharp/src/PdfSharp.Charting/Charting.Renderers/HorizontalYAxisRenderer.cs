@@ -61,7 +61,8 @@ namespace PdfSharp.Charting.Renderers
                 XSize labelSize = new XSize(0, 0);
                 for (double y = yMin; y <= yMax; y += yMajorTick)
                 {
-                    string str = y.ToString(yari.TickLabelsFormat);
+                    var newY = FixNegativeNearZeroValues(y);
+                    string str = newY.ToString(yari.TickLabelsFormat);
                     labelSize = gfx.MeasureString(str, yari.TickLabelsFont);
                     size.Width += labelSize.Width;
                     size.Height = Math.Max(labelSize.Height, size.Height);
@@ -139,22 +140,23 @@ namespace PdfSharp.Charting.Renderers
             for (int i = 0; i < countTickLabels; ++i)
             {
                 double y = yMin + yMajorTick * i;
-                string str = y.ToString(yari.TickLabelsFormat);
+                var newY = FixNegativeNearZeroValues(y);
+                string str = newY.ToString(yari.TickLabelsFormat);
 
                 XSize labelSize = gfx.MeasureString(str, yari.TickLabelsFont);
                 if (yari.MajorTickMark != TickMarkType.None)
                 {
                     labelSize.Height += 1.5f * yari.MajorTickMarkWidth;
-                    points[0].X = y;
+                    points[0].X = newY;
                     points[0].Y = majorTickMarkStart;
-                    points[1].X = y;
+                    points[1].X = newY;
                     points[1].Y = majorTickMarkEnd;
                     matrix.TransformPoints(points);
                     lineFormatRenderer.DrawLine(points[0], points[1]);
                 }
 
                 XPoint[] layoutText = new XPoint[1];
-                layoutText[0].X = y;
+                layoutText[0].X = newY;
                 layoutText[0].Y = yari.Y + 1.5 * yari.MajorTickMarkWidth;
                 matrix.TransformPoints(layoutText);
                 layoutText[0].X -= labelSize.Width / 2; // Center text vertically.

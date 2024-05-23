@@ -154,8 +154,12 @@ namespace PdfSharp.Charting.Renderers
             }
 
             // Major ticks.
+            // TODO fc
+            //  && xari.XValues != null && xari.XValues.Count > 0
+            
             if (xari.MajorTickMark != TickMarkType.None)
             {
+                // var firstXValues = xari.XValues[0];
                 int countMajorTickMarks = (int)(xMax / xMajorTick);
                 double majorTickMarkStep = xari.Width;
                 if (countMajorTickMarks != 0)
@@ -163,6 +167,7 @@ namespace PdfSharp.Charting.Renderers
                 startPos.X = xari.X;
                 for (int x = 0; x <= countMajorTickMarks; x++)
                 {
+                    // if(firstXValues != null && firstXValues.Count > x && string.IsNullOrEmpty(firstXValues[x]?.Value)) continue; // Don't draw tick marks without caption!
                     points[0].X = startPos.X + majorTickMarkStep * x;
                     points[0].Y = majorTickMarkStart;
                     points[1].X = points[0].X;

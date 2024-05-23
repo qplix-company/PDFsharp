@@ -28,4 +28,10 @@
     <ProjectReference Include="..\PdfSharp\PdfSharp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Charting.Renderers\DonutPlotAreaRenderer.cs">
+      <Link>Charting.Renderers\DonutPlotAreaRenderer.cs</Link>
+    </Compile>
+  </ItemGroup>
+
 </Project>

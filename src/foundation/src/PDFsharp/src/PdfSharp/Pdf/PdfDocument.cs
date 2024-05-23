@@ -425,6 +425,8 @@ namespace PdfSharp.Pdf
             Catalog.PrepareForSave();
 
 #if true
+            // TODO fc
+            // QPLIX has false here
             // Remove all unreachable objects (e.g. from deleted pages).
             int removed = IrefTable.Compact();
             if (removed != 0 && PdfSharpLogHost.Logger.IsEnabled(LogLevel.Information))

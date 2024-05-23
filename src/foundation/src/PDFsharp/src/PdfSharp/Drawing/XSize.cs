@@ -22,7 +22,9 @@ namespace PdfSharp.Drawing
     /// graphical object.
     /// </summary>
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + "}")]
-    [Serializable, StructLayout(LayoutKind.Sequential)] //, ValueSerializer(typeof(SizeValueSerializer)), TypeConverter(typeof(SizeConverter))]
+    [Serializable,
+     StructLayout(LayoutKind
+         .Sequential)] //, ValueSerializer(typeof(SizeValueSerializer)), TypeConverter(typeof(SizeConverter))]
     public struct XSize : IFormattable
     {
         /// <summary>
@@ -30,8 +32,14 @@ namespace PdfSharp.Drawing
         /// </summary>
         public XSize(double width, double height)
         {
+            if (Math.Abs(width) < 0.000001)
+                width = 0;
+            if (Math.Abs(height) < 0.000001)
+                height = 0;
             if (width < 0 || height < 0)
-                throw new ArgumentException("WidthAndHeightCannotBeNegative"); //SR.Get(SRID.Size_WidthAndHeightCannotBeNegative, new object[0]));
+                throw
+                    new ArgumentException(
+                        "WidthAndHeightCannotBeNegative"); //SR.Get(SRID.Size_WidthAndHeightCannotBeNegative, new object[0]));
 
             _width = width;
             _height = height;
@@ -105,7 +113,8 @@ namespace PdfSharp.Drawing
             if (str == "Empty")
                 empty = Empty;
             else
-                empty = new XSize(Convert.ToDouble(str, cultureInfo), Convert.ToDouble(helper.NextTokenRequired(), cultureInfo));
+                empty = new XSize(Convert.ToDouble(str, cultureInfo),
+                    Convert.ToDouble(helper.NextTokenRequired(), cultureInfo));
             helper.LastTokenRequired();
             return empty;
         }
@@ -257,12 +266,17 @@ namespace PdfSharp.Drawing
             set
             {
                 if (IsEmpty)
-                    throw new InvalidOperationException("CannotModifyEmptySize"); //SR.Get(SRID.Size_CannotModifyEmptySize, new object[0]));
+                    throw
+                        new InvalidOperationException(
+                            "CannotModifyEmptySize"); //SR.Get(SRID.Size_CannotModifyEmptySize, new object[0]));
                 if (value < 0)
-                    throw new ArgumentException("WidthCannotBeNegative"); //SR.Get(SRID.Size_WidthCannotBeNegative, new object[0]));
+                    throw
+                        new ArgumentException(
+                            "WidthCannotBeNegative"); //SR.Get(SRID.Size_WidthCannotBeNegative, new object[0]));
                 _width = value;
             }
         }
+
         double _width;
 
         /// <summary>
@@ -274,12 +288,17 @@ namespace PdfSharp.Drawing
             set
             {
                 if (IsEmpty)
-                    throw new InvalidOperationException("CannotModifyEmptySize"); // SR.Get(SRID.Size_CannotModifyEmptySize, new object[0]));
+                    throw
+                        new InvalidOperationException(
+                            "CannotModifyEmptySize"); // SR.Get(SRID.Size_CannotModifyEmptySize, new object[0]));
                 if (value < 0)
-                    throw new ArgumentException("HeightCannotBeNegative"); //SR.Get(SRID.Size_HeightCannotBeNegative, new object[0]));
+                    throw
+                        new ArgumentException(
+                            "HeightCannotBeNegative"); //SR.Get(SRID.Size_HeightCannotBeNegative, new object[0]));
                 _height = value;
             }
         }
+
         double _height;
 
         /// <summary>
@@ -314,7 +333,7 @@ namespace PdfSharp.Drawing
         /// <value>The debugger display.</value>
         // ReSharper disable UnusedMember.Local
         string DebuggerDisplay
-        // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
         {
             get
             {

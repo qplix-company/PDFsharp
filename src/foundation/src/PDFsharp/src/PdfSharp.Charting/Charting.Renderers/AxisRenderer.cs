@@ -158,5 +158,12 @@ namespace PdfSharp.Charting.Renderers
         protected const double SpaceBetweenLabelAndTickmark = 2.1; // 0.7 mm
 
         protected abstract string GetDefaultTickLabelsFormat();
+        
+        protected static double FixNegativeNearZeroValues(double y)
+        {
+            if (Math.Abs(y) < 0.000001) // A-2561: round in order to avoid "-0 %" labels being caused by negative doubles near 0
+                return 0d;
+            return y;
+        }
     }
 }

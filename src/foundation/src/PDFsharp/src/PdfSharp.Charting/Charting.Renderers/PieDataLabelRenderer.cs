@@ -15,7 +15,8 @@ namespace PdfSharp.Charting.Renderers
         /// specified renderer parameters.
         /// </summary>
         internal PieDataLabelRenderer(RendererParameters parms) : base(parms)
-        { }
+        {
+        }
 
         /// <summary>
         /// Calculates the space used by the data labels.
@@ -44,7 +45,14 @@ namespace PdfSharp.Charting.Renderers
                     if (sri.DataLabelRendererInfo.Type == DataLabelType.Percent)
                     {
                         double percent = 100 / (sumValues / Math.Abs(sector.Point!.Value));
-                        dleri.Text = percent.ToString(sri.DataLabelRendererInfo.Format) + "%";
+                        if (percent >= 5)
+                        {
+                            dleri.Text = percent.ToString(sri.DataLabelRendererInfo.Format) + "%";
+                        }
+                        else
+                        {
+                            dleri.Text = "";
+                        }
                     }
                     else if (sri.DataLabelRendererInfo.Type == DataLabelType.Value)
                         dleri.Text = sector.Point!.Value.ToString(sri.DataLabelRendererInfo.Format);
@@ -52,6 +60,7 @@ namespace PdfSharp.Charting.Renderers
                     if (dleri.Text.Length > 0)
                         dleri.Size = gfx.MeasureString(dleri.Text, sri.DataLabelRendererInfo.Font);
                 }
+
                 sri.DataLabelRendererInfo.Entries[index++] = dleri;
             }
         }
@@ -101,9 +110,11 @@ namespace PdfSharp.Charting.Renderers
                         double midAngle = sector.StartAngle + sector.SweepAngle / 2;
                         double radMidAngle = midAngle / 180 * Math.PI;
                         XPoint origin = new XPoint(sector.Rect.X + sector.Rect.Width / 2,
-                          sector.Rect.Y + sector.Rect.Height / 2);
+                            sector.Rect.Y + sector.Rect.Height / 2);
                         double radius = sector.Rect.Width / 2;
                         double halfradius = radius / 2;
+
+                        double labelOffset = 5;
 
                         var dleri = sri.DataLabelRendererInfo.Entries[sectorIndex++];
                         switch (sri.DataLabelRendererInfo.Position)
@@ -113,7 +124,9 @@ namespace PdfSharp.Charting.Renderers
                                 dleri.X = origin.X + (radius * Math.Cos(radMidAngle));
                                 dleri.Y = origin.Y + (radius * Math.Sin(radMidAngle));
                                 if (dleri.X < origin.X)
-                                    dleri.X -= dleri.Width;
+                                    dleri.X -= dleri.Width + labelOffset;
+                                if (dleri.X > origin.X)
+                                    dleri.X += labelOffset;
                                 if (dleri.Y < origin.Y)
                                     dleri.Y -= dleri.Height;
                                 break;

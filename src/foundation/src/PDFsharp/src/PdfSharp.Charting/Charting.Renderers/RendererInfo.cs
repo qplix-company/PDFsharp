@@ -2,6 +2,7 @@
 // See the LICENSE file in the solution root for more information.
 
 using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 
 namespace PdfSharp.Charting.Renderers
 {
@@ -98,7 +99,7 @@ namespace PdfSharp.Charting.Renderers
         /// Gets the chart's default font for rendering.
         /// </summary>
         public XFont DefaultFont
-            => _defaultFont ??= Converter.ToXFont(Chart._font, new XFont("Arial", 12, XFontStyleEx.Regular));
+            => _defaultFont ??= Converter.ToXFont(Chart._font, new XFont("Arial", 12, XFontStyleEx.Regular, new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always)));
 
         XFont? _defaultFont;
 
@@ -106,7 +107,7 @@ namespace PdfSharp.Charting.Renderers
         /// Gets the chart's default font for rendering data labels.
         /// </summary>
         public XFont DefaultDataLabelFont
-            => _defaultDataLabelFont ??= Converter.ToXFont(Chart._font, new XFont("Arial", 10, XFontStyleEx.Regular));
+            => _defaultDataLabelFont ??= Converter.ToXFont(Chart._font, new XFont("Arial", 10, XFontStyleEx.Regular, new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always)));
 
         XFont? _defaultDataLabelFont;
     }

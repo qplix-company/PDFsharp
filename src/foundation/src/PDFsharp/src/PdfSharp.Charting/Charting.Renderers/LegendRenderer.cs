@@ -14,7 +14,8 @@ namespace PdfSharp.Charting.Renderers
         /// Initializes a new instance of the LegendRenderer class with the specified renderer parameters.
         /// </summary>
         internal LegendRenderer(RendererParameters parms) : base(parms)
-        { }
+        {
+        }
 
         /// <summary>
         /// Layouts and calculates the space used by the legend.
@@ -34,7 +35,17 @@ namespace PdfSharp.Charting.Renderers
             bool verticalLegend = (lri.Legend._docking == DockingType.Left || lri.Legend._docking == DockingType.Right);
             XSize maxMarkerArea = new XSize();
             var ler = new LegendEntryRenderer(parms);
+
+            List<LegendEntryRendererInfo> notEmptyInfos = new List<LegendEntryRendererInfo>();
             foreach (LegendEntryRendererInfo leri in lri.Entries)
+            {
+                if (!string.IsNullOrEmpty(leri.EntryText))
+                {
+                    notEmptyInfos.Add(leri);
+                }
+            }
+
+            foreach (LegendEntryRendererInfo leri in notEmptyInfos)
             {
                 parms.RendererInfo = leri;
                 ler.Format();
@@ -61,11 +72,11 @@ namespace PdfSharp.Charting.Renderers
             lri.Width += (LegendRenderer.LeftPadding + LegendRenderer.RightPadding) * paddingFactor;
             lri.Height += (LegendRenderer.TopPadding + LegendRenderer.BottomPadding) * paddingFactor;
             if (verticalLegend)
-                lri.Height += LegendRenderer.EntrySpacing * (lri.Entries.Length - 1);
+                lri.Height += LegendRenderer.EntrySpacing * (notEmptyInfos.Count - 1);
             else
-                lri.Width += LegendRenderer.EntrySpacing * (lri.Entries.Length - 1);
+                lri.Width += LegendRenderer.EntrySpacing * (notEmptyInfos.Count - 1);
 
-            foreach (LegendEntryRendererInfo leri in lri.Entries)
+            foreach (LegendEntryRendererInfo leri in notEmptyInfos)
                 leri.MarkerArea = maxMarkerArea;
         }
 

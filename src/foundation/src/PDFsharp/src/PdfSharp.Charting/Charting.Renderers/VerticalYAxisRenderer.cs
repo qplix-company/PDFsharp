@@ -62,7 +62,8 @@ namespace PdfSharp.Charting.Renderers
                 var labelSize = new XSize(0, 0);
                 for (double y = yMin; y <= yMax; y += yMajorTick)
                 {
-                    string str = y.ToString(yari.TickLabelsFormat);
+                    var newY = FixNegativeNearZeroValues(y);
+                    string str = newY.ToString(yari.TickLabelsFormat);
                     labelSize = gfx.MeasureString(str, yari.TickLabelsFont);
                     size.Height += labelSize.Height;
                     size.Width = Math.Max(size.Width, labelSize.Width);
@@ -151,7 +152,8 @@ namespace PdfSharp.Charting.Renderers
             for (int i = 0; i < countTickLabels; ++i)
             {
                 double y = yMin + yMajorTick * i;
-                string str = y.ToString(yari.TickLabelsFormat);
+                var newY = FixNegativeNearZeroValues(y);
+                string str = newY.ToString(yari.TickLabelsFormat);
 
                 labelSize.Width = gfx.MeasureString(str, yari.TickLabelsFont).Width;
 
@@ -160,9 +162,9 @@ namespace PdfSharp.Charting.Renderers
                 {
                     labelSize.Width += yari.MajorTickMarkWidth * 1.5;
                     points[0].X = majorTickMarkStart;
-                    points[0].Y = y;
+                    points[0].Y = newY;
                     points[1].X = majorTickMarkEnd;
-                    points[1].Y = y;
+                    points[1].Y = newY;
                     matrix.TransformPoints(points);
                     majorTickMarkLineFormat.DrawLine(points[0], points[1]);
                 }
@@ -172,7 +174,7 @@ namespace PdfSharp.Charting.Renderers
                 // Draw label text.
                 var layoutText = new XPoint[1];
                 layoutText[0].X = yari.InnerRect.X + yari.InnerRect.Width - labelSize.Width;
-                layoutText[0].Y = y;
+                layoutText[0].Y = newY;
                 matrix.TransformPoints(layoutText);
                 layoutText[0].Y += labelSize.Height / 2; // Center text vertically.
                 gfx.DrawString(str, yari.TickLabelsFont, yari.TickLabelsBrush, layoutText[0]);

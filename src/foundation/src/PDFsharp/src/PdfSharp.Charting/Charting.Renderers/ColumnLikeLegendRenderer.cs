@@ -58,7 +58,10 @@ namespace PdfSharp.Charting.Renderers
                         leri.MarkerPen = sri.LineFormat;
                         leri.MarkerBrush = sri.FillFormat;
                     }
-
+                    
+                    // TODO fc
+                    // for some reason QPLIX doesn't want to run this code
+                    
                     if (cri.Chart._type == ChartType.ColumnStacked2D)
                         // Stacked columns are in reverse order.
                         lri.Entries[cri.SeriesRendererInfos.Length - index++ - 1] = leri;

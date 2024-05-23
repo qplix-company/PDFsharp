@@ -41,32 +41,35 @@ namespace PdfSharp.Charting.Renderers
             if (cri.SeriesRendererInfos.Length == 0)
                 return;
 
-            XRect innerPlotAreaRect = cri.PlotAreaRendererInfo.Rect;
-            double w = Math.Min(innerPlotAreaRect.Width, innerPlotAreaRect.Height) * DonutWidthPercentage / 100d;
-            innerPlotAreaRect.X += w / 2;
-            innerPlotAreaRect.Y += w / 2;
-            innerPlotAreaRect.Width -= w;
-            innerPlotAreaRect.Height -= w;
-
             var gfx = _rendererParms.Graphics;
             var state = gfx.Save();
 
             // Draw sectors.
             var sri = cri.SeriesRendererInfos[0];
+            XRect sectorRect = XRect.Empty;
             foreach (SectorRendererInfo sector in sri.PointRendererInfos)
             {
+                if (!sector.Rect.IsEmpty)
+                    sectorRect = sector.Rect;
                 if (!Double.IsNaN(sector.StartAngle) && !Double.IsNaN(sector.SweepAngle))
                     gfx.DrawPie(sector.FillFormat, sector.Rect, sector.StartAngle, sector.SweepAngle);
             }
 
-            // Draw border of the sectors.
-            if (_isDonut)
+            // Fill inner pie with background color for a donut
+            if (_isDonut && !sectorRect.IsEmpty)
             {
+                XRect innerPlotAreaRect = cri.PlotAreaRendererInfo.Rect;
+                double w = Math.Min(innerPlotAreaRect.Width, innerPlotAreaRect.Height) * DonutWidthPercentage / 100d;
+                innerPlotAreaRect.X += w / 2;
+                innerPlotAreaRect.Y += w / 2;
+                innerPlotAreaRect.Width -= w;
+                innerPlotAreaRect.Height -= w;
                 XBrush backgroundBrush = new XSolidBrush(cri.PlotAreaRendererInfo.PlotArea.FillFormat.Color);
                 gfx.DrawPie(backgroundBrush, innerPlotAreaRect, 0, 360);
             }
             else
             {
+                // Draw border of the sectors.
                 foreach (SectorRendererInfo sector in sri.PointRendererInfos)
                 {
                     if (!Double.IsNaN(sector.StartAngle) && !Double.IsNaN(sector.SweepAngle))

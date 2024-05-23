@@ -133,6 +133,9 @@
         <Compile Include="..\PdfSharp.Charting\Charting.Renderers\PieExplodedPlotAreaRenderer.cs">
             <Link>Charting.Renderers\PieExplodedPlotAreaRenderer.cs</Link>
         </Compile>
+        <Compile Include="..\PdfSharp.Charting\Charting.Renderers\DonutPlotAreaRenderer.cs">
+            <Link>Charting.Renderers\DonutPlotAreaRenderer.cs</Link>
+        </Compile>
         <Compile Include="..\PdfSharp.Charting\Charting.Renderers\PieLegendRenderer.cs">
             <Link>Charting.Renderers\PieLegendRenderer.cs</Link>
         </Compile>

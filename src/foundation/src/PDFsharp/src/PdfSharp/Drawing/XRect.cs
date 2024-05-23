@@ -32,7 +32,9 @@ namespace PdfSharp.Drawing
         /// Initializes a new instance of the XRect class.
         /// </summary>
         public XRect(double x, double y, double width, double height)
-        {
+        { 
+            width = Math.Round(width, 8);
+            height = Math.Round(height, 8);
             if (width < 0 || height < 0)
                 throw new ArgumentException("WidthAndHeightCannotBeNegative"); //SR.Get(SRID.Size_WidthAndHeightCannotBeNegative, new object[0]));
             _x = x;
